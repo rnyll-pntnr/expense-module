@@ -1,0 +1,351 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Expense Module API Documentation",
+        "description": "API documentation for the Expense module",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/v1/api/expenses": {
+            "get": {
+                "tags": [
+                    "Expenses"
+                ],
+                "summary": "Get all expenses",
+                "operationId": "27356e0037d23765c244e6c582412003",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Expense"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Expenses"
+                ],
+                "summary": "Create a new expense",
+                "operationId": "a5820275e875ccfd12b47d1cddf5be98",
+                "requestBody": {
+                    "description": "Expense data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreExpenseRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Expense created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Expense"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/v1/api/expenses/{id}": {
+            "get": {
+                "tags": [
+                    "Expenses"
+                ],
+                "summary": "Get a single expense by ID",
+                "operationId": "9e344ebdd6c681613d13385a6f6fe86b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the expense to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Expense"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Expense not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Expenses"
+                ],
+                "summary": "Update an existing expense",
+                "operationId": "9a39e98c16bc88517815a132ae71e7cf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the expense to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated expense data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateExpenseRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Expense updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Expense"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Expense not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Expenses"
+                ],
+                "summary": "Delete an expense",
+                "operationId": "78f230e5258a9823aa12ec65c2af40da",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the expense to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Expense deleted successfully"
+                    },
+                    "404": {
+                        "description": "Expense not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ExpenseCategory": {
+                "title": "ExpenseCategory",
+                "description": "Expense category enum",
+                "type": "string",
+                "enum": [
+                    "travel",
+                    "food",
+                    "supplies",
+                    "other"
+                ]
+            },
+            "Expense": {
+                "title": "Expense",
+                "description": "Expense model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID of the expense",
+                        "type": "string",
+                        "format": "string",
+                        "readOnly": true,
+                        "example": "9a1d8f7e-1b2c-3d4e-5f6a-7b8c9d0e1f2a"
+                    },
+                    "title": {
+                        "title": "Title",
+                        "description": "Title of the expense",
+                        "type": "string",
+                        "example": "Groceries"
+                    },
+                    "amount": {
+                        "title": "Amount",
+                        "description": "Amount of the expense",
+                        "type": "number",
+                        "format": "float",
+                        "example": "50.25"
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/ExpenseCategory"
+                    },
+                    "expense_date": {
+                        "title": "Expense Date",
+                        "description": "Date of the expense",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-09-27"
+                    },
+                    "notes": {
+                        "title": "Notes",
+                        "description": "Additional notes for the expense",
+                        "type": "string",
+                        "example": "Weekly grocery shopping",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "title": "Created At",
+                        "description": "Date and time when the expense was created",
+                        "type": "string",
+                        "format": "datetime",
+                        "readOnly": true,
+                        "example": "2025-09-27T10:00:00.000000Z"
+                    },
+                    "updated_at": {
+                        "title": "Updated At",
+                        "description": "Date and time when the expense was last updated",
+                        "type": "string",
+                        "format": "datetime",
+                        "readOnly": true,
+                        "example": "2025-09-27T10:00:00.000000Z"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Expense"
+                }
+            },
+            "StoreExpenseRequest": {
+                "title": "StoreExpenseRequest",
+                "description": "Store expense request body data",
+                "properties": {
+                    "title": {
+                        "title": "Title",
+                        "description": "Title of the expense",
+                        "type": "string",
+                        "example": "Groceries"
+                    },
+                    "amount": {
+                        "title": "Amount",
+                        "description": "Amount of the expense",
+                        "type": "number",
+                        "format": "float",
+                        "example": "50.25"
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/ExpenseCategory"
+                    },
+                    "expense_date": {
+                        "title": "Expense Date",
+                        "description": "Date of the expense",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-09-27"
+                    },
+                    "notes": {
+                        "title": "Notes",
+                        "description": "Additional notes for the expense",
+                        "type": "string",
+                        "example": "Weekly grocery shopping",
+                        "nullable": true
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "StoreExpenseRequest"
+                }
+            },
+            "UpdateExpenseRequest": {
+                "title": "UpdateExpenseRequest",
+                "description": "Update expense request body data",
+                "properties": {
+                    "title": {
+                        "title": "Title",
+                        "description": "Title of the expense",
+                        "type": "string",
+                        "example": "Groceries"
+                    },
+                    "amount": {
+                        "title": "Amount",
+                        "description": "Amount of the expense",
+                        "type": "number",
+                        "format": "float",
+                        "example": "50.25"
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/ExpenseCategory"
+                    },
+                    "expense_date": {
+                        "title": "Expense Date",
+                        "description": "Date of the expense",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-09-27"
+                    },
+                    "notes": {
+                        "title": "Notes",
+                        "description": "Additional notes for the expense",
+                        "type": "string",
+                        "example": "Weekly grocery shopping",
+                        "nullable": true
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UpdateExpenseRequest"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Expenses",
+            "description": "API Endpoints for Expenses"
+        }
+    ]
+}

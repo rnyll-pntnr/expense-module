@@ -1,0 +1,37 @@
+### USE https://marketplace.visualstudio.com/items?itemName=humao.rest-client to run each API endpoints inside VS Code
+
+
+# Get all expenses
+GET http://localhost:8080/v1/api/expenses HTTP/1.1
+content-type: application/json
+
+### Create a new expense
+POST http://localhost:8080/v1/api/expenses HTTP/1.1
+content-type: application/json
+Content-Type: application/json
+
+{
+    "title": "New Expense 1",
+    "category": "food",
+    "expense_date": "2025-09-25",
+    "notes": "This is a test expense."
+}
+
+### Get expense by id
+GET http://localhost:8080/v1/api/expenses/01998a66-ec6c-732b-a9f0-4255952c44ec HTTP/1.1
+content-type: application/json
+
+### Update expense by id
+PUT http://localhost:8080/v1/api/expenses/01998a66-ec6c-732b-a9f0-4255952c44ec HTTP/1.1
+content-type: application/json
+
+{
+    "title": "Updated Expense 1",
+    "category": "food",
+    "expense_date": "2025-09-25",
+    "notes": "This is an updated test expense."
+}
+
+### Delete expense by id
+DELETE http://localhost:8080/v1/api/expenses/019989da-4afd-735a-b456-b6297dd49f68 HTTP/1.1
+content-type: application/json
