@@ -8,10 +8,10 @@ content-type: application/json
 ### Create a new expense
 POST http://localhost:8080/v1/api/expenses HTTP/1.1
 content-type: application/json
-Content-Type: application/json
 
 {
     "title": "New Expense 1",
+    "amount": 100.00,
     "category": "food",
     "expense_date": "2025-09-25",
     "notes": "This is a test expense."
