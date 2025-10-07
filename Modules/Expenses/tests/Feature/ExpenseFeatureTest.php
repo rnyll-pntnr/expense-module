@@ -155,8 +155,17 @@ class ExpenseFeatureTest extends TestCase
         ];
 
         $response = $this->postJson('/v1/api/expenses', $expenseData);
-
+        
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['title', 'amount', 'category', 'expense_date']);
+                 ->assertJson([
+                    'success' => false,
+                    'message' => 'Validation errors occurred',
+                    'data' => [
+                        'title' => ['The title field is required.'],
+                        'amount' => ['The amount field must be at least 0.'],
+                        'category' => ['The selected category is invalid.'],
+                        'expense_date' => ['The expense date field must be a valid date.'],
+                    ]
+                 ]);
     }
 }
